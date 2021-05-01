@@ -18,5 +18,5 @@ public class Greeter extends AbstractLoggingActor {
         public Greeting(String message) {
             this.message = message;
         }
-    };
+    }
 }
