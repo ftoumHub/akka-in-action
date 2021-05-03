@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SilentActor01Test extends StopSystemAfterAll{
 
-    @DisplayName("Listing 3.4 - Single-threaded test of internal state")
+    // Listing 3.4 - Single-threaded test of internal state
+    @DisplayName("change internal state when it receives a message, single")
     @Test
     void singleThreadedUnitTest() {
         // Given an actor under test
@@ -29,7 +30,8 @@ public class SilentActor01Test extends StopSystemAfterAll{
         assertTrue(ref.underlyingActor().state().contains("whisper"));
     }
 
-    @DisplayName("Listing 3.6 - Multithreaded test of internal state")
+    // Listing 3.6 - Multithreaded test of internal state
+    @DisplayName("change internal state when it receives a message, multi")
     @Test
     void multiThreadedUnitTest() {
         new TestKit(system) {

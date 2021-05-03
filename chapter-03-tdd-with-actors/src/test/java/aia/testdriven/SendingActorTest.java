@@ -1,29 +1,31 @@
 package aia.testdriven;
 
+import aia.testdriven.SendingActor.Event;
+import aia.testdriven.SendingActor.SortEvents;
+import aia.testdriven.SendingActor.SortedEvents;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import akka.japi.JavaPartialFunction;
 import akka.testkit.javadsl.TestKit;
-import org.assertj.core.api.Assert;
-import org.junit.jupiter.api.BeforeAll;
+import io.vavr.collection.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
+import static akka.actor.ActorRef.noSender;
+import static akka.japi.JavaPartialFunction.noMatch;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.LongStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SendingActorTest extends StopSystemAfterAll{
 
     private final Random random = new Random();
 
+    // Listing 3.8 - Sending actor test
     @DisplayName("A Sending Actor must send a message to another actor when it has finished processeing")
     @Test
-    void singleThreadedUnitTest() {
+    void sendingActorTest() {
         new TestKit(system) {
             {
                 final Props props = SendingActor.props(getRef());
@@ -32,27 +34,27 @@ public class SendingActorTest extends StopSystemAfterAll{
                 final Long size = 1000L;
                 final Long maxInclusive = 100000L;
 
-                final io.vavr.collection.List<SendingActor.Event> unsorted = io.vavr.collection.List.ofAll(randomEvents(size));
-                final SendingActor.SortEvents sortEvents = new SendingActor.SortEvents(unsorted);
+                final List<Event> unsorted = randomEvents(size);
+                final SortEvents sortEvents = new SortEvents(unsorted);
 
-                sendingActor.tell(sortEvents, ActorRef.noSender());
+                sendingActor.tell(sortEvents, noSender());
 
                 expectMsgPF("match hint",
                         se -> {
-                            if (se instanceof SendingActor.SortedEvents) {
-                                final io.vavr.collection.List<SendingActor.Event> events = ((SendingActor.SortedEvents) se).events();
+                            if (se instanceof SortedEvents) {
+                                final List<Event> events = ((SortedEvents) se).events();
                                 assertThat(events).hasSize(1000);
                                 assertThat(unsorted.sortBy(__ -> __.id)).isEqualTo(events);
                                 return "match";
                             } else {
-                                throw JavaPartialFunction.noMatch();
+                                throw noMatch();
                             }
                         });
             }
         };
     }
 
-    private List<SendingActor.Event> randomEvents(Long size) {
-        return LongStream.range(0L, size).mapToObj(__ -> new SendingActor.Event(random.nextLong())).collect(toList());
+    private List<Event> randomEvents(Long size) {
+        return List.ofAll(range(0L, size).mapToObj(__ -> new Event(random.nextLong())).collect(toList()));
     }
 }

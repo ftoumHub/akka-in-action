@@ -1,35 +1,21 @@
-Akka実践バイブルのサンプルコードのJava版
-==============
+Chapitre 3 - Test-driven development with actors
+================================================
 
-Akka実践バイブル「第2章　最小のAkkaアプリケーション」のサンプルコードをJavaに置き換えてみた。
+Traduction du livre "Akka in Action" paru aux éditions Manning.
 
-### 必要な環境
-* JDK8以上
+
+### Prérequis
+* JDK8
 * Maven
 
-### ソースコードの取得
-```
-git clone <xxx.git>
-```
 
-### コンパイル・サーバー起動
-- `chapter-up-and-running` ディレクトリで実行
-```
-mvn compile exec:exec
-```
-
-### テスト
-- `chapter-up-and-running` ディレクトリで実行
+### Lancement des tests
 ```
 mvn test
 ```
 
-### APIエンドポイント
+### Dans ce chapitre
 
-| 機能 | HTTPメソッド | パス | JSON |
-| --- | ----- | ---- | --- |
-| イベント作成 | POST | /events/<イベント名>/ | {"tickets":<枚数>} |
-| チケット購入 | POST | /events/<イベント名>/tickets/ | {"tickets":<枚数>} |
-| イベント一覧 | GET | /events/ | |
-| イベント取得 | GET | /events/<イベント名>/ |
-| イベントキャンセル | DELETE | /events/<イベント名>/ |
+* Unit testing actors synchronously
+* Unit testing actors asynchronously
+* Unit testing actor messaging patterns
