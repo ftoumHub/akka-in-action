@@ -5,7 +5,6 @@ import akka.actor.AbstractLoggingActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import io.vavr.collection.List;
-import io.vavr.collection.Vector;
 
 public class SendingActor extends AbstractLoggingActor {
 
