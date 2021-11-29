@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com</groupId>
-    <artifactId>up-and-running</artifactId>
+    <artifactId>chap-02-up-and-running</artifactId>
     <version>1.0</version>
 
     <dependencies>

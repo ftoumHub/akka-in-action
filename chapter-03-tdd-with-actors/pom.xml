@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com</groupId>
-    <artifactId>tdd-with-actors</artifactId>
+    <artifactId>chap-03-tdd-with-actors</artifactId>
     <version>1.0</version>
 
     <properties>
